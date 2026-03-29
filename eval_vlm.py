@@ -62,8 +62,9 @@ def main():
             inputs_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, open_thinking=bool(args.open_thinking))
             inputs = tokenizer(inputs_text, return_tensors="pt", truncation=True).to(args.device)
             
+            safe_prompt = prompt.replace("\n", "\\n")
             print(f'[图像]: {image_file}')
-            print(f'💬: {prompt.replace('\n', '\\n')}')
+            print(f'💬: {safe_prompt}')
             print('🤖: ', end='')
             st = time.time()
             generated_ids = model.generate(
